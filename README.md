@@ -6,4 +6,4 @@ tested with a 8bitdo SF30 Pro
 
 using the current Batocera/Knulli setup for pygame
 * python 3.9
-* pygame 2.5.2
+* pygame-ce 2.5.2 (should behave same as pygame, with only minor hiccups)
