@@ -5,10 +5,10 @@ import pygame
 LR = Literal["L", "R", None]
 
 class Button(ABC):
-    def __init__(self, label, center, button_cols, radius = 15.0):
+    def __init__(self, label, center, parent:"Pad", radius = 15.0):
         self.label = label
+        self.parent = parent
         self.center = center
-        self.button_cols = button_cols
         self.radius = radius
         self.active = False
     @abstractmethod
@@ -22,7 +22,7 @@ class Button(ABC):
 class Button1(Button):
     # Basic Round Button
     def draw(self,surface:pygame.Surface):
-        button_col, label_col, active_col = self.button_cols
+        button_col, label_col, active_col = self.parent.button_cols
         r = self.radius
         _col = active_col if self.active else button_col
         pygame.draw.circle(surface=surface,color=_col, center=self.center,radius=r)
@@ -36,7 +36,7 @@ class Button2(Button):
     def draw(self, surface):
         long_btn = pygame.Rect((0,0), (self.radius * 2, 2*self.radius //3 ))
         long_btn.center = self.center
-        button_col, label_col, active_col = self.button_cols
+        button_col, label_col, active_col = self.parent.button_cols
         font = pygame.font.Font(None, 16)
         text = font.render(self.label, True, button_col)
         textpos = text.get_rect(center=long_btn.center).move(0,16)
@@ -46,12 +46,12 @@ class Button2(Button):
 
 class Button3(Button):
     # teriary buttons for bumpers like L or R
-    def __init__(self, label, center, button_cols, side:LR = None, radius = 15.0):
-        super().__init__(label, center, button_cols, radius)
+    def __init__(self, label, center, parent:"Pad", side:LR = None, radius = 15.0):
+        super().__init__(label, center, parent, radius)
         self.side = side
     def draw(self, surface):
         size = pygame.math.Vector2(self.radius*2,self.radius)
-        button_col, label_col, active_col = self.button_cols
+        button_col, label_col, active_col = self.parent.button_cols
         btn_rect = pygame.Rect((0,0),size)
         btn_rect.center = self.center
         font = pygame.font.Font(None, 16)
