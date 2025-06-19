@@ -1,0 +1,9 @@
+[project]
+name = "controller-test"
+version = "0.1.0"
+description = "Basic Test for a XBOX-like controller"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pygame-ce==2.5.2",
+]
