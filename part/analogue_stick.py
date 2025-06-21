@@ -1,5 +1,3 @@
-#from math import pow
-
 import pygame
 from pygame.math import Vector2
 
@@ -8,7 +6,7 @@ from .colors import ACTIVE, BUTTON, PAD as LABEL
 
 
 class AnalogueStick(Button):
-    def __init__(self, label:str, center:Vector2, radius=15.0):
+    def __init__(self, label: str, center: Vector2, radius=15.0):
         self.label = label
         self.center = center
         self.radius = radius
