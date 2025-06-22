@@ -1,3 +1,4 @@
 assets/*
 **/__pycache__
 uv.lock
+part/test_analogue_stick.py

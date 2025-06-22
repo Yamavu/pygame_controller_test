@@ -1,17 +1,16 @@
 from abc import ABC, abstractmethod
-from typing import Literal, Optional
+from typing import Literal
 
 import pygame
 from pygame.math import Vector2
 
 from .colors import ACTIVE, BUTTON, PAD as LABEL
-from math import ceil
 
 LR = Literal["L", "R", None]
 
 
 class Button(ABC):
-    def __init__(self, label:str, center, radius=15.0):
+    def __init__(self, label: str, center, radius=15.0):
         self.label = label
         self.center = center
         self.radius = radius
@@ -21,13 +20,18 @@ class Button(ABC):
     def draw(self, surface: pygame.Surface):
         ...
 
-    def _draw_label(self, center, surface, font = None, font_size:int = 16, color = LABEL, \
-            move:Vector2 = Vector2(0,0)):
+    def _draw_label(
+            self,
+            center,
+            surface,
+            font=None,
+            font_size: int = 16,
+            color=LABEL,
+            move: Vector2 = Vector2(0, 0)):
         font = pygame.font.Font(font, font_size)
         text = font.render(self.label, True, color)
         textpos = text.get_rect(center=center).move(move)
         surface.blit(text, textpos)
-
 
     def pressed(self):
         self.active = True
@@ -46,7 +50,8 @@ class Button1(Button):
             color=_col,
             center=self.center,
             radius=r)
-        self._draw_label(self.center, surface, font_size=int(2*r), move = Vector2(0, 1))
+        _move = Vector2(0, 1)
+        self._draw_label(self.center, surface, font_size=int(2*r), move=_move)
 
 
 class Button2(Button):
@@ -60,7 +65,9 @@ class Button2(Button):
             color=_col,
             rect=long_btn,
             border_radius=int(self.radius/3))
-        self._draw_label(long_btn.center, surface, color=BUTTON, move=Vector2(0,16))
+        _move = Vector2(0, 16)
+        self._draw_label(long_btn.center, surface, color=BUTTON, move=_move)
+
 
 class Button3(Button):
     # teriary buttons for bumpers like L or R
@@ -85,4 +92,4 @@ class Button3(Button):
             _col, btn_rect,
             border_top_left_radius=_radius_left,
             border_top_right_radius=_radius_right)
-        self._draw_label(btn_rect.center , surface)
+        self._draw_label(btn_rect.center, surface)
