@@ -1,11 +1,10 @@
 import pygame
 from pygame.math import Vector2
 
-from .button import Button
 from .colors import ACTIVE, BUTTON, PAD as LABEL
 
 
-class AnalogueStick(Button):
+class AnalogueStick:
     def __init__(self, label: str, center: Vector2, radius=15.0):
         self.label = label
         self.center = center

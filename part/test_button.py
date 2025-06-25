@@ -1,4 +1,4 @@
-from .button import Button, Button1
+from .button import GenericButton, Button1
 import pytest
 
 
@@ -8,7 +8,7 @@ def test_cannot_instantiate_abstract_button():
     """
     msg = "Can't instantiate abstract class Button with abstract method draw"
     with pytest.raises(TypeError, match=msg):
-        Button("Abstract", (0, 0))
+        GenericButton("Abstract", (0, 0))
 
 
 @pytest.fixture

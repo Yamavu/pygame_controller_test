@@ -6,22 +6,22 @@ from pygame.math import Vector2
 
 from .analogue_stick import AnalogueStick
 from .d_pad import D_Pad
-from .button import Button, Button1, Button2, Button3
+from .button import GenericButton, Button, Shape
 from .analogue_trigger import AnalogueTrigger
 from .colors import BUTTON, PAD
 
 
 class Pad(pygame.Surface):
-    def __init__(self, size:Vector2, instance:pygame.joystick.JoystickType):
+    def __init__(self, size: Vector2, instance: pygame.joystick.JoystickType):
         super().__init__(size.xy)
         self.instance = instance
         self._pad_c = Vector2(150, 70)
         self.hats: Mapping[int, D_Pad] = {}
-        self.buttons: Mapping[int, Button] = {}
+        self.buttons: Mapping[int, GenericButton] = {}
         self.sticks: Mapping[Tuple[int, int], AnalogueStick] = {}
         self.triggers: Mapping[int, AnalogueTrigger] = {}
 
-    def _update_axis(self,event) -> bool:
+    def _update_axis(self, event) -> bool:
         change_detected = False
         for axes in self.sticks:
             if event.axis == axes[0]:
@@ -86,15 +86,15 @@ class SNES_Pad(Pad):
         self.hats: Mapping[int, D_Pad] = {
             0: D_Pad(0, pad_c+(-100, 0))
         }
-        self.buttons: Mapping[int, Button] = {
-            0: Button1("B", button_c + (0, 25)),
-            1: Button1("A", button_c + (25, 0)),
-            2: Button1("Y", button_c + (-25, 0)),
-            3: Button1("X", button_c + (0, -25)),
-            4: Button3("L", pad_c + (-130, -55), None),
-            5: Button3("R", pad_c + (130, -55), None),
-            6: Button2("-Select", pad_c + (-25, 0)),
-            7: Button2("+Start", pad_c + (25, 0)),
+        self.buttons: Mapping[int, GenericButton] = {
+            0: Button("B", button_c + (0, 25), shape=Shape.Round),
+            1: Button("A", button_c + (25, 0), shape=Shape.Round),
+            2: Button("Y", button_c + (-25, 0), shape=Shape.Round),
+            3: Button("X", button_c + (0, -25), shape=Shape.Round),
+            4: Button("L", pad_c + (-130, -55), shape=Shape.Bumper),
+            5: Button("R", pad_c + (130, -55), shape=Shape.Bumper),
+            6: Button("-Select", pad_c + (-25, 0), shape=Shape.Long),
+            7: Button("+Start", pad_c + (25, 0), shape=Shape.Long),
         }
         self.sticks: Mapping[Tuple[int, int], AnalogueStick] = {}
         self.triggers: Mapping[int, AnalogueTrigger] = {}
@@ -121,15 +121,15 @@ class XBox_Pad(Pad):
             (0, 1): AnalogueStick("L", pad_c+(-30, 25)),
             (3, 4): AnalogueStick("R", pad_c+(30, 25))
         }
-        self.buttons: Mapping[int, Button] = {
-            0: Button1("B", button_c + (0, 25)),
-            1: Button1("A", button_c + (25, 0)),
-            2: Button1("Y", button_c + (-25, 0)),
-            3: Button1("X", button_c + (0, -25)),
-            4: Button3("L1", pad_c+(-125, -55), "L"),
-            5: Button3("R1", pad_c+(125, -55), "R"),
-            6: Button2("-Select", pad_c+(-25, -15)),
-            7: Button2("+Start", pad_c+(25, -15)),
+        self.buttons: Mapping[int, GenericButton] = {
+            0: Button("B", button_c + (0, 25), shape=Shape.Round),
+            1: Button("A", button_c + (25, 0), shape=Shape.Round),
+            2: Button("Y", button_c + (-25, 0), shape=Shape.Round),
+            3: Button("X", button_c + (0, -25), shape=Shape.Round),
+            4: Button("L1", pad_c+(-125, -55), shape=Shape.LeftBumper),
+            5: Button("R1", pad_c+(125, -55), shape=Shape.RightBumper),
+            6: Button("-Select", pad_c+(-25, -15), shape=Shape.Long),
+            7: Button("+Start", pad_c+(25, -15), shape=Shape.Long),
             8: self.sticks[(0, 1)],
             9: self.sticks[(3, 4)]
         }

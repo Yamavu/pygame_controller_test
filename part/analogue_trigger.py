@@ -1,9 +1,6 @@
-from typing import Literal
 import pygame
 
 from .colors import ACTIVE, BUTTON, PAD as LABEL
-
-LR = Literal["L", "R", None]
 
 
 class AnalogueTrigger():
@@ -11,7 +8,6 @@ class AnalogueTrigger():
             self,
             label,
             center,
-            side=None,
             radius=15.0,
             analogue_range=(-1, 1)):
         self.label = label
