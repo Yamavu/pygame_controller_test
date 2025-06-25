@@ -1,19 +1,19 @@
-from .button import GenericButton, Button1
+from .button import GenericButton, Button, Shape
 import pytest
 
 
-def test_cannot_instantiate_abstract_button():
+def test_cannot_instantiate_button_protocol():
     """
     Verifies that the abstract Button class cannot be instantiated directly.
     """
-    msg = "Can't instantiate abstract class Button with abstract method draw"
+    msg = r"Protocols cannot be instantiated"
     with pytest.raises(TypeError, match=msg):
-        GenericButton("Abstract", (0, 0))
+        GenericButton("Protocol", (0, 0))
 
 
 @pytest.fixture
 def button():
-    b = Button1("A", (0, 0), radius=15.0)
+    b = Button("A", (0, 0), shape=Shape.Round, radius=15.0)
     return b
 
 
